@@ -152,6 +152,42 @@
         button:active {
             transform: scale(0.95);
         }
+        /* Stylish share button styles */
+.share-button {
+    position: fixed;
+    bottom: 2px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #6e7fdb, #9f82ce);
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.share-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff30;
+    border-radius: 50%;
+}
+
+.share-button span {
+    font-size: 1.2em;
+    color: #fff;
+    font-weight: 500;
+}
+
+.share-button:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #84a9ff, #b69ce5);
+}
     </style>
 </head>
 <body>
@@ -169,6 +205,14 @@
                      <img src="https://i.pinimg.com/564x/01/2c/d3/012cd3fb6105677652b9a07a8ef87f2f.jpg" alt="">
                 </div>
             </div>
+            <!-- Stylish Share Button HTML -->
+    <div class="share-button" id="shareBtn">
+      <div class="share-icon">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/share.png" alt="Share Icon">
+      </div>
+      <span>Share</span>
+  </div>
+  <div id="google_element"></div> <!-- Google Translate Widget will render here -->
 
             <!-- Back of Page 1 -->
             <div class="page page-back" id="page1-back">
@@ -304,23 +348,23 @@
             }
         });
     
-        // Share functionality
-        const shareBtn = document.getElementById('shareBtn');
-    
-        shareBtn.addEventListener('click', () => {
-            // Check for Web Share API support
-            if (navigator.share) {
-                navigator.share({
-                    text: 'Please read this great article: ',
-                    url: 'https://www.google.com/'
-                }).then(() => {
-                    console.log('Thanks for sharing!');
-                }).catch((err) => console.error(err));
-            } else {
-                // Fallback
-                alert("The current browser does not support the share function. Please, manually share the link.");
-            }
-        });
+       // Share functionality
+      const shareBtn = document.getElementById('shareBtn');
+  
+      shareBtn.addEventListener('click', () => {
+          // Check for Web Share API support
+          if (navigator.share) {
+              navigator.share({
+                  text: 'Please read this great article: ',
+                  url: 'https://www.google.com/'
+              }).then(() => {
+                  console.log('Thanks for sharing!');
+              }).catch((err) => console.error(err));
+          } else {
+              // Fallback
+              alert("The current browser does not support the share function. Please, manually share the link.");
+          }
+      });
     </script>
     </body>
     </html>
