@@ -14,12 +14,14 @@
             height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;           
+            align-items: center;    
+            top: 0px !important;       
             background: url('https://i.pinimg.com/564x/63/c2/75/63c275a8ffb4bb010077f69948876851.jpg') no-repeat;
             background-size: cover;  /* Ensures the image covers the whole screen */
             background-position: center;  /* Centers the image */
             background-attachment: fixed;  /* Ensures the background stays in place when scrolling */
         }
+        
 
         /* Book container */
         .book-container {
@@ -64,6 +66,42 @@
             border-radius: 30px; /* Curl effect on the edges */
             
         }
+        /* Google Translate Widget */
+#google_element {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the dropdown */
+.goog-te-combo {
+    background: #f8f9fa;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Hide Google Translate banner */
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+} 
+
+
+/* Customize translated text */
+.goog-te-gadget {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
 
 
         /* Back of the page */
@@ -152,42 +190,48 @@
         button:active {
             transform: scale(0.95);
         }
-        /* Stylish share button styles */
+        /* Stylish share button styles (black theme, smaller size) */
 .share-button {
     position: fixed;
-    bottom: 2px;
-    right: 20px;
+    bottom: 10px;
+    right: 15px;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #6e7fdb, #9f82ce);
-    padding: 10px 20px;
-    border-radius: 30px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #333, #555);
+    padding: 6px 14px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .share-icon {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
+    width: 16px;  /* Reduced icon size */
+    height: 16px; /* Reduced icon size */
+    margin-right: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #ffffff30;
+    background-color: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
 }
 
+.share-icon img {
+    width: 12px;  /* Further reduced the inner share icon */
+    height: 12px;
+}
+
 .share-button span {
-    font-size: 1.2em;
+    font-size: 0.9em;
     color: #fff;
     font-weight: 500;
 }
 
 .share-button:hover {
-    transform: scale(1.1);
-    background: linear-gradient(135deg, #84a9ff, #b69ce5);
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #444, #666);
 }
+
     </style>
 </head>
 <body>
