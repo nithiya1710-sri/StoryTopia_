@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Set the font and background */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Center the login container */
+    .login-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* Title */
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #333;
+    }
+
+    /* Form elements */
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #4CAF50;
+      box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+    }
+
+    /* Button style */
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Error message */
+    #error-message {
+      color: red;
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    /* Add responsiveness for mobile devices */
+    @media (max-width: 500px) {
+      .login-container {
+        padding: 20px;
+      }
+
+      .login-container h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Email" required /><br />
+      <input type="password" id="password" placeholder="Password" required /><br />
+      <button type="submit">Login</button>
+    </form>
+    <p id="error-message"></p>
+    <p>
+      Don't have an account?
+      <a href="sign.html">Sign Up</a>
+    </p>
+  </div>
+
+  <script type="module">
+    // Import Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
+
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAq9DFcu0wQFlx_A29eMToxfa6_ZIfe8V8",
+      authDomain: "login-signup-d0cb0.firebaseapp.com",
+      projectId: "login-signup-d0cb0",
+      storageBucket: "login-signup-d0cb0.firebasestorage.app",
+      messagingSenderId: "438094614420",
+      appId: "1:438094614420:web:65db32c93def3c69884981",
+      measurementId: "G-DRDW3W1C8F"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    // Handle login form submission
+    document.getElementById("login-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      // Attempt to sign in the user
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Successful login, redirect to home page
+          window.location.href = "home.html";
+        })
+        .catch((error) => {
+          // Handle error and show message
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          if (errorCode === "auth/invalid-email") {
+            document.getElementById("error-message").textContent = "Invalid email format.";
+          } else if (errorCode === "auth/user-not-found") {
+            document.getElementById("error-message").textContent = "No user found with this email.";
+          } else if (errorCode === "auth/wrong-password") {
+            document.getElementById("error-message").textContent = "Incorrect password.";
+          } else {
+            document.getElementById("error-message").textContent = errorMessage;
+          }
+        });
+    });
+  </script>
+</body>
+</html>

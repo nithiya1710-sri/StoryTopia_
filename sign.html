@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+  <style>
+    /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container for the signup form */
+.signup-container {
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Title */
+.signup-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form Inputs */
+.signup-container input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Submit Button */
+.signup-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.signup-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Error Message */
+#signup-error-message {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Link for Login */
+.signup-container p {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.signup-container p a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.signup-container p a:hover {
+    text-decoration: underline;
+}
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>Sign Up</h2>
+    <form id="signup-form">
+      <input type="text" id="signup-name" placeholder="Full Name" required /><br />
+      <input type="email" id="signup-email" placeholder="Email" required /><br />
+      <input type="password" id="signup-password" placeholder="Password" required /><br />
+      <button type="submit">Sign Up</button>
+    </form>
+    <p id="signup-error-message"></p>
+    <p>
+      Already have an account?
+      <a href="login.html">Login</a>
+    </p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+    import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+  
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAq9DFcu0wQFlx_A29eMToxfa6_ZIfe8V8",
+      authDomain: "login-signup-d0cb0.firebaseapp.com",
+      projectId: "login-signup-d0cb0",
+      storageBucket: "login-signup-d0cb0.firebasestorage.app",
+      messagingSenderId: "438094614420",
+      appId: "1:438094614420:web:65db32c93def3c69884981",
+      measurementId: "G-DRDW3W1C8F"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);  // Add this line
+    const db = getFirestore(app);
+  
+    // Signup form submission
+    document.getElementById("signup-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fullName = document.getElementById("signup-name").value;
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-password").value;
+  
+      try {
+        // Create a new user with email and password
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+  
+        // Save additional user data in Firestore
+        console.log("Saving user data:", fullName, email);  // Log data for debugging
+        await setDoc(doc(db, "users", user.uid), {
+          name: fullName,
+          email: email,
+          createdAt: new Date()
+        });
+  
+        alert("Signup successful! Please log in.");
+        window.location.href = "login.html";
+      } catch (error) {
+        console.error("Error signing up:", error);  // More detailed error logging
+        document.getElementById("signup-error-message").textContent = error.message;
+      }
+    });
+  </script>
+  
+</body>
+</html>

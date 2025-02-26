@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Book</title>
+    <style>
+        body {
+            font-family: 'Garamond', serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://i.pinimg.com/736x/71/37/06/7137060f79a17f808352725180f54e55.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .book-container {
+            width: 80vw;
+            height: 85vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .book {
+            position: relative;
+            width: 70vw;
+            height: 80vh;
+            perspective: 1500px;
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.pinimg.com/564x/6f/ca/c6/6fcac6459748e43741e7355ef70cb0c7.jpg') no-repeat;
+            background-size: cover;
+            padding: 40px;
+            box-sizing: border-box;
+            border: 2px solid #d3b185;
+            backface-visibility: hidden;
+            transform-origin: left;
+            transition: transform 1s ease-in-out;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        .page-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page h2 {
+            font-size: 2.6em;
+            color: #5a4b3b;
+            text-align: center;
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        .page p {
+            line-height: 1.8;
+            font-size: 1em;
+            color: #5b4636;
+            text-align: justify;
+            max-width: 45%;
+            font-family: 'Garamond', serif;
+        }
+
+        .page img {
+            max-width: 50%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navigation-buttons {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+            z-index: 1000;
+        }
+
+        button {
+            font-size: 1.5em;
+            padding: 12px 25px;
+            background: linear-gradient(90deg, #5087c6, #6e9fde);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #6e9fde, #a0c9f0);
+            transform: scale(1.05);
+        }
+
+        .share-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #6e7fdb, #9f82ce);
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .share-button span {
+            font-size: 1.2em;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <div class="book">
+            <div class="page" id="page1">
+                <h2>Chapter 1: Snow White</h2>
+                <div class="page-content">
+                    <p>Snow White is a kind princess with skin as white as snow. The Evil Queen, jealous of her beauty, orders a huntsman to kill her. Instead, he lets her escape into the forest.</p>
+                    <img src="https://i.pinimg.com/564x/6f/ca/c6/6fcac6459748e43741e7355ef70cb0c7.jpg" alt="">
+                </div>
+            </div>
+
+            <div class="page" id="page2">
+                <h2>Chapter 2: The Seven Dwarfs</h2>
+                <div class="page-content">
+                    <p>Snow White finds a cottage belonging to seven dwarfs who take care of her. Meanwhile, the Evil Queen plots to kill her using dark magic.</p>
+                    <img src="https://i.pinimg.com/564x/b2/08/8d/b2088d9a499cef6a4601983f52ad7924.jpg" alt="">
+                </div>
+            </div>
+
+            <div class="page" id="page3">
+                <h2>Chapter 3: The Awakening</h2>
+                <div class="page-content">
+                    <p>The Queen poisons Snow White. She falls into a deep sleep until a prince awakens her with a kiss. They live happily ever after.</p>
+                    <img src="https://i.pinimg.com/564x/b7/3c/26/b73c26f8ccf389f26be6ce423180f0bb.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation-buttons">
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next</button>
+    </div>
+
+    <div class="share-button" id="shareBtn">
+        <span>Share</span>
+    </div>
+
+    <script>
+        const pages = document.querySelectorAll('.page');
+        let currentPage = 0;
+
+        function updatePages() {
+            pages.forEach((page, index) => {
+                page.style.display = (index === currentPage) ? 'block' : 'none';
+            });
+        }
+
+        updatePages();
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentPage < pages.length - 1) {
+                currentPage++;
+                updatePages();
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                updatePages();
+            }
+        });
+
+        document.getElementById('shareBtn').addEventListener('click', () => {
+            alert("Share this story!");
+        });
+    </script>
+</body>
+</html>
