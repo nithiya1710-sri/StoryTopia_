@@ -152,6 +152,43 @@
         button:active {
             transform: scale(0.95);
         }
+            /* Stylish share button styles */
+/* Stylish share button styles */
+.share-button {
+    position: fixed;
+    bottom: 2px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #6e7fdb, #9f82ce);
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.share-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff30;
+    border-radius: 50%;
+}
+
+.share-button span {
+    font-size: 1.2em;
+    color: #fff;
+    font-weight: 500;
+}
+
+.share-button:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #84a9ff, #b69ce5);
+}
     </style>
 </head>
 <body>
@@ -222,6 +259,14 @@ In the year 2090, a revolutionary invention is unveiled—a floating hotel calle
         <button id="prevBtn">Previous</button>
         <button id="nextBtn">Next</button>
     </div>
+    <!-- Stylish Share Button HTML -->
+<div class="share-button" id="shareBtn">
+    <div class="share-icon">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/share.png" alt="Share Icon">
+    </div>
+    <span>Share</span>
+</div>
+    <div id="google_element"></div> <!-- Google Translate Widget will render here -->
     <div id="google_element"></div> <!-- Google Translate Widget will render here -->
 
 
